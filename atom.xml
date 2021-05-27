@@ -237,9 +237,9 @@
     
       <category term="debug" scheme="http://bigma.cc/tags/debug/"/>
     
-      <category term="windows" scheme="http://bigma.cc/tags/windows/"/>
-    
       <category term="ios" scheme="http://bigma.cc/tags/ios/"/>
+    
+      <category term="windows" scheme="http://bigma.cc/tags/windows/"/>
     
       <category term="weinre" scheme="http://bigma.cc/tags/weinre/"/>
     
