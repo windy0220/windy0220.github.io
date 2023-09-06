@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> javascript高级程序设计-阅读笔记 · 大马的个人网站</title><meta name="description" content="javascript高级程序设计-阅读笔记 - 大马"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://bigma.cc/atom.xml" title="大马的个人网站"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avater.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">日志</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="/1000/01/01/实验室/" target="_self" class="nav-list-link">实验室</a></li><li class="nav-list-item"><a href="http://weibo.com/80yang" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/windy0220" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">javascript高级程序设计-阅读笔记</h1><div class="post-info">2018年3月28日</div><div class="post-content"><p>仅记录个人认为的重点内容 持续更新<br><a id="more"></a></p>
+<h4 id="第一章-javascript-简介"><a href="#第一章-javascript-简介" class="headerlink" title="第一章 javascript 简介"></a>第一章 javascript 简介</h4><p>javascript 由以下三部分组成</p>
+<ul>
+<li>ECMAScript</li>
+<li>DOM</li>
+<li>BOM </li>
+</ul>
+<p>ECMAScript 由以下组成</p>
+<ul>
+<li>语法</li>
+<li>类型</li>
+<li>语句</li>
+<li>关键字</li>
+<li>保留字</li>
+<li>操作符</li>
+<li>对象</li>
+</ul>
+<p>DOM</p>
+<ul>
+<li>视图，事件，样式，遍历和范围 </li>
+</ul>
+<p>BOM</p>
+<ul>
+<li>弹出新浏览器窗口</li>
+<li>移动、缩放、关闭浏览器窗口</li>
+<li>提供浏览器详细信息的 navigator 对象</li>
+<li>提供浏览器所加载页面的详细信息的 location 对象</li>
+<li>提供用户显示器分辨率详细信息的 screen 对象</li>
+<li>对 cookies 的支持</li>
+<li>像 XMLHttpReqquest 和 IE 的 ActiveXobject 这样的自定义对象 </li>
+</ul>
+<h4 id="第二章-HTML中使用-javascript"><a href="#第二章-HTML中使用-javascript" class="headerlink" title="第二章 HTML中使用 javascript"></a>第二章 HTML中使用 javascript</h4><p>\&lt;script> 属性</p>
+<ul>
+<li>async 异步加载 <code>&lt;script async  src=&quot;exampel.js&quot;&gt;&lt;/script&gt;</code></li>
+<li>defer 延迟加载 <code>&lt;script defer=&quot;defer&quot;  src=&quot;exampel.js&quot;&gt;&lt;/script&gt;</code></li>
+<li>type <code>text/javascript</code></li>
+</ul>
+<p>\&lt;noscript> 元素<br>如果浏览器不支持脚本或被禁用将显示其中的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;noscript&gt;</span><br><span class="line"> &lt;p&gt;需要浏览器支持 javascript &lt;/p&gt;</span><br><span class="line">&lt;/noscript&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="第三章-基本概念"><a href="#第三章-基本概念" class="headerlink" title="第三章 基本概念"></a>第三章 基本概念</h4><ul>
+<li>区分大小写</li>
+<li>标识符<ul>
+<li>第一个字符 字母 下划线 美元符号</li>
+<li>字母 下划线 美元符号 和 数字</li>
+</ul>
+</li>
+<li>语句<ul>
+<li>一般不建议省略分号</li>
+<li>if 语句中建议使用 代码块 {}</li>
+</ul>
+</li>
+<li>变量<ul>
+<li>声明一个变量 若未赋值，那么该变量会有一个特殊的值 undefined</li>
+<li>不推荐通过赋值改变变量的数据类型，但这是有效的</li>
+<li>在函数内 var 一个变量，退出函数后会被销毁。如果不使用 var 那么将是一个全局变量</li>
+<li>一次声明多个变量 <code>var message=&quot;hi&quot;, age</code></li>
+</ul>
+</li>
+<li>数据类型<ul>
+<li>基本数据类型 Undefined Null Boolean Number String</li>
+<li>复杂数据类型 Object</li>
+</ul>
+</li>
+<li>typeof 操作符<ul>
+<li>使用 typeof(message) 或 typeof message 可返回 message 的数据类型</li>
+<li>undefined 如果值未定义</li>
+<li>boolean 如果是布尔值</li>
+<li>string 如果是字符串</li>
+<li>number 如果是数值</li>
+<li>object 如果是对象或 null <em>注意 null也是个对象</em></li>
+<li>function 如果值为一个函数 </li>
+</ul>
+</li>
+<li>Undefined<ul>
+<li>如果声明了一个变量未赋值那么是 undefined ，如果没有声明就调用 会报错</li>
+<li>未初始化的变量和声明未赋值的变量执行 typeof 操作符都会返回 undefined</li>
+</ul>
+</li>
+<li>Null<ul>
+<li>null 值表示一个空对象指针 所以null 在执行 typeof 的时候会返回 object</li>
+<li>要定义 对象 可以初始化为 null</li>
+<li>undefined 派生自 null 所以 undefined == null 但 undefined === null 为 false</li>
+</ul>
+</li>
+<li>Boolean<ul>
+<li>String 非空字符串 为 true; “”空字符串 为 false</li>
+<li>Number 任何非零数值包括无穷大 为 true; 0 和 NaN 为 false</li>
+<li>Object 任何对象 为 true ; null 为 false</li>
+<li>Undefined 为 false</li>
+</ul>
+</li>
+<li>Number<ul>
+<li>可使用 十进制 八进制 十六进制</li>
+<li>无效的八进制将会去掉 第一位的 0 并被当作 十进制</li>
+<li>浮点 .1 有效但不推荐</li>
+<li>会舍弃小数点后无意义的值 如1.0 为 1</li>
+<li>浮点计算精度问题 0.1+0.2 = 0.30000000000000004 (IEEE754 数值浮点计算通病)</li>
+<li>最大值 Number.MAX_VALUE 最小值 Number.MIN_VALUE</li>
+<li>超过最大值 为Infinity 正无穷；超过最小值 为  -Infinity 负无穷； ifFinite() 若为 true 则说明数值在范围之内</li>
+<li>NaN == Nan 为 false ; 与NaN计算都为 NaN 如 NaN/10 为 NaN</li>
+<li>isNaN() 尝试将参数转会数值再判断 “10” 可转换为 10； “blue” 不能转换为数值 ； true 可转换为 1；false 转换为 0</li>
+<li>数值转换 </li>
+</ul>
+</li>
+<li>String 类型<ul>
+<li>字符串由 双引号，或单引号表示。</li>
+<li>字符字面量 \n \t \b \r \f \ \’ \” \xnn \unnnn</li>
+<li>字符串定义后不可改变，只能销毁后重新赋值。导致某些旧浏览器拼接字符串效率低下。</li>
+<li>数值、布尔值、对象和字符串都可以使用 toString(进制数，默认10) 转换为 字符串。null undefinde 没有这个方法</li>
+<li>String() 方法,值由 toString()方法则使用。null 返回 null undefinde 返回 undefinde</li>
+</ul>
+</li>
+<li>Object 类型<ul>
+<li>对象为一组数据和功能的集合</li>
+<li>创建对象 <code>var o = new Object();</code> 可省略() 但不推荐</li>
+<li></li>
+</ul>
+</li>
+<li>位操作符<ul>
+<li>~ 按位非 操作数的负值减1</li>
+<li>&amp; 按位与 </li>
+</ul>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/04/06/docker的使用体验/" class="prev">PREV</a><a href="/2018/03/24/控制反转与依赖注入/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ma-chen-cn';
+var disqus_identifier = '2018/03/28/javascript高级程序设计-阅读笔记/';
+var disqus_title = 'javascript高级程序设计-阅读笔记';
+var disqus_url = 'http://bigma.cc/2018/03/28/javascript高级程序设计-阅读笔记/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ma-chen-cn.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2023 <a href="http://bigma.cc">大马</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>. <a href="https://beian.miit.gov.cn/" target="_blank">冀ICP备13002956号-1</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-116335564-1",'auto');ga('send','pageview');</script></body></html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 阿里云OSS图片优化参数 · 大马的个人网站</title><meta name="description" content="阿里云OSS图片优化参数 - 大马"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://bigma.cc/atom.xml" title="大马的个人网站"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avater.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">日志</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="/1000/01/01/实验室/" target="_self" class="nav-list-link">实验室</a></li><li class="nav-list-item"><a href="http://weibo.com/80yang" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/windy0220" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">阿里云OSS图片优化参数</h1><div class="post-info">2021年6月7日</div><div class="post-content"><p>您可以通过格式转换参数，转换存储在OSS内原图的格式。本文介绍对图片进行格式转换时所用到的参数及示例。</p>
+<h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><p>操作名称：<strong>format</strong></p>
+<p>参数说明如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">取值范围</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>jpg</strong></td>
+<td style="text-align:left">将原图保存成JPG格式，如果原图是PNG、WebP、BMP等存在透明通道的格式，默认会把透明填充成白色。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>png</strong></td>
+<td style="text-align:left">将原图保存成PNG格式。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>webp</strong></td>
+<td style="text-align:left">将原图保存成WebP格式。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>bmp</strong></td>
+<td style="text-align:left">将原图保存成BMP格式。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>gif</strong></td>
+<td style="text-align:left">原图为GIF图片则继续保存为GIF格式；原图不是GIF图片，则按原图格式保存。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>tiff</strong></td>
+<td style="text-align:left">将原图保存成TIFF格式。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li><p>图片处理包含缩放操作时，建议将格式转换参数放到处理参数的最后。</p>
+<p>例如<code>image/resize,w_100/format,jpg</code></p>
+</li>
+<li><p>图片处理包含缩放和水印操作时，建议将格式转换参数添加在缩放参数之后。</p>
+<p>例如<code>image/reisze,w_100/format,jpg/watermark,...</code></p>
+</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>本文示例使用的Bucket为杭州地域名为image-demo的Bucket，图片外网访问地址为：</p>
+<p><a href="https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif[![gif](/images/p139212.png)](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/8448459951/p139212.png)" target="_blank" rel="noopener">https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif[![gif](/images/p139212.png)](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/8448459951/p139212.png)</a></p>
+<ul>
+<li><p>将原图转换为PNG格式</p>
+<p>图片处理URL为：<a href="https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif?x-oss-process=image/format,png[![png](/images/p139213.png)](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/8448459951/p139213.png)" target="_blank" rel="noopener">https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif?x-oss-process=image/format,png[![png](/images/p139213.png)](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/8448459951/p139213.png)</a></p>
+</li>
+<li><p>将原图转换成JPG格式，并支持渐进显示</p>
+<p>需求及处理参数如下：</p>
+<ul>
+<li>图片设置为渐进显示：<code>interlace,1</code></li>
+<li>图片转换为JPG格式：<code>format,jpg</code></li>
+</ul>
+<p>图片处理URL为：<a href="https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif?x-oss-process=image/interlace,1/format,jpg" target="_blank" rel="noopener">https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif?x-oss-process=image/interlace,1/format,jpg</a></p>
+<p><img src="/images/p2555.jpg" alt="img"></p>
+</li>
+<li><p>将原图缩放为宽200 px，并转换为WebP格式</p>
+<p>需求及处理参数如下：</p>
+<ul>
+<li>图片缩放为宽200 px：<code>resize,w_200</code></li>
+<li>图片转换为WebP格式：<code>format,webp</code></li>
+</ul>
+<p>图片处理URL为：<a href="https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif?x-oss-process=image/resize,w_200/format,webp[![img](/images/p2559.webp)](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/1548459951/p2559.webp?spm=a2c4g.11186623.2.12.48fc66a35FOLP9&amp;file=p2559.webp)" target="_blank" rel="noopener">https://image-demo.oss-cn-hangzhou.aliyuncs.com/example.gif?x-oss-process=image/resize,w_200/format,webp[![img](/images/p2559.webp)](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/1548459951/p2559.webp?spm=a2c4g.11186623.2.12.48fc66a35FOLP9&amp;file=p2559.webp)</a></p>
+</li>
+</ul>
+<p>原文地址 <a href="https://help.aliyun.com/document_detail/44703.html?spm=a2c4g.11186623.6.752.665f7fd8tuPrz4" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/44703.html?spm=a2c4g.11186623.6.752.665f7fd8tuPrz4</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2021/06/07/阿里云OSS自动转换webP图片/" class="prev">PREV</a><a href="/2021/05/28/node版本管理工具nvm的安装和使用/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ma-chen-cn';
+var disqus_identifier = '2021/06/07/阿里云OSS图片优化参数/';
+var disqus_title = '阿里云OSS图片优化参数';
+var disqus_url = 'http://bigma.cc/2021/06/07/阿里云OSS图片优化参数/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ma-chen-cn.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2023 <a href="http://bigma.cc">大马</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>. <a href="https://beian.miit.gov.cn/" target="_blank">冀ICP备13002956号-1</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-116335564-1",'auto');ga('send','pageview');</script></body></html>

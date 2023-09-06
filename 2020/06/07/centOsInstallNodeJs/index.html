@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Centos 安装 NodeJs PM2 守护NUXT · 大马的个人网站</title><meta name="description" content="Centos 安装 NodeJs PM2 守护NUXT - 大马"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://bigma.cc/atom.xml" title="大马的个人网站"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avater.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">日志</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="/1000/01/01/实验室/" target="_self" class="nav-list-link">实验室</a></li><li class="nav-list-item"><a href="http://weibo.com/80yang" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/windy0220" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Centos 安装 NodeJs PM2 守护NUXT</h1><div class="post-info">2020年6月7日</div><div class="post-content"><h1 id="获取下载链接"><a href="#获取下载链接" class="headerlink" title="获取下载链接"></a>获取下载链接</h1><p>进入以下页面，获取 Linux Binaries (x64) 的链接<br><a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a> </p>
+<p>若需要其他版本请访问 <a href="https://nodejs.org/dist/" target="_blank" rel="noopener">https://nodejs.org/dist/</a></p>
+<hr>
+<p>以下安装步骤以 <code>node-v12.18.0-linux-x64</code> 为例，其他版本替换相应路径即可。</p>
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p>wget <a href="https://nodejs.org/dist/v12.18.0/node-v12.18.0-linux-x64.tar.xz" target="_blank" rel="noopener">https://nodejs.org/dist/v12.18.0/node-v12.18.0-linux-x64.tar.xz</a></p>
+<h1 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h1><p>xz -d node-v12.18.0-linux-x64.tar.xz<br>tar -xf node-v12.18.0-linux-x64.tar</p>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p>这里注意node解压的路径 以 <code>~</code> 目录为例<br>ln -s ~/node-v12.18.0-linux-x64/bin/node /usr/bin/node<br>ln -s ~/node-v12.18.0-linux-x64/bin/npm /usr/bin/npm<br>ln -s ~/node-v12.18.0-linux-x64/bin/npm /usr/bin/npx</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>node -v<br>npm<br>npx</p>
+<h1 id="安装pm2"><a href="#安装pm2" class="headerlink" title="安装pm2"></a>安装pm2</h1><p>npm i -g pm2</p>
+<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start npm --name &quot;package.json中的应用名称&quot; -- run start</span><br></pre></td></tr></table></figure></p>
+<h4 id="pm2-常用命令"><a href="#pm2-常用命令" class="headerlink" title="pm2 常用命令"></a>pm2 常用命令</h4><table>
+<thead>
+<tr>
+<th>说明</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动进程/应用</td>
+<td>pm2 start bin/www 或 pm2 start app.js</td>
+</tr>
+<tr>
+<td>重命名进程/应用</td>
+<td>pm2 start app.js –name wb123</td>
+</tr>
+<tr>
+<td>添加进程/应用</td>
+<td>watch pm2 start bin/www –watch</td>
+</tr>
+<tr>
+<td>结束进程/应用</td>
+<td>pm2 stop www</td>
+</tr>
+<tr>
+<td>结束所有进程/应用</td>
+<td>pm2 stop all</td>
+</tr>
+<tr>
+<td>删除进程/应用</td>
+<td>pm2 delete www</td>
+</tr>
+<tr>
+<td>删除所有进程/应用</td>
+<td>pm2 delete all</td>
+</tr>
+<tr>
+<td>列出所有进程/应用</td>
+<td>pm2 list</td>
+</tr>
+<tr>
+<td>查看某个进程/应用具体情况</td>
+<td>pm2 describe www</td>
+</tr>
+<tr>
+<td>查看进程/应用的资源消耗情况</td>
+<td>pm2 monit</td>
+</tr>
+<tr>
+<td>查看pm2的日志</td>
+<td>pm2 logs</td>
+</tr>
+<tr>
+<td>若要查看某个进程/应用的日志,使用</td>
+<td>pm2 logs www</td>
+</tr>
+<tr>
+<td>重新启动进程/应用</td>
+<td>pm2 restart www</td>
+</tr>
+<tr>
+<td>重新启动所有进程/应用</td>
+<td>pm2 restart all</td>
+</tr>
+</tbody>
+</table>
+<h1 id="nginx-反向代理设置"><a href="#nginx-反向代理设置" class="headerlink" title="nginx 反向代理设置"></a>nginx 反向代理设置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name 域名1 域名2;</span><br><span class="line">  location / &#123;</span><br><span class="line">        root /data/wwwroot/路径; # 前端文件目录</span><br><span class="line">        proxy_pass http://127.0.0.1:3000;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="pm2-开机启动"><a href="#pm2-开机启动" class="headerlink" title="pm2 开机启动"></a>pm2 开机启动</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动项目</span></span><br><span class="line">pm2 start npm --name <span class="string">"package.json中的应用名称"</span> -- run start</span><br><span class="line"><span class="comment"># 保存当前进程状态</span></span><br><span class="line">pm2 save</span><br><span class="line"><span class="comment"># 生成开机自启动服务</span></span><br><span class="line">pm2 startup</span><br><span class="line"><span class="comment"># 启用开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> pm2-root</span><br></pre></td></tr></table></figure>
+<h4 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h4><ol>
+<li><p>-bash: pm2: command not found<br>替换 node-v12.18.0-linux-x64 为你的node 版本号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /root/node-v12.18.0-linux-x64/lib/node_modules/pm2/bin/pm2 /usr/local/bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行 npm i失败<br>安装node-sass时会出现，Permissions Errors</p>
+</li>
+</ol>
+<p>使用二进制安装的Node 会有权限问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R root:root node-v8.10.0-linux-x64</span><br></pre></td></tr></table></figure></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2021/05/28/node版本管理工具nvm的安装和使用/" class="prev">PREV</a><a href="/2020/05/31/new_navcat_restore_lost_table/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ma-chen-cn';
+var disqus_identifier = '2020/06/07/centOsInstallNodeJs/';
+var disqus_title = 'Centos 安装 NodeJs PM2 守护NUXT';
+var disqus_url = 'http://bigma.cc/2020/06/07/centOsInstallNodeJs/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ma-chen-cn.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2023 <a href="http://bigma.cc">大马</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>. <a href="https://beian.miit.gov.cn/" target="_blank">冀ICP备13002956号-1</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-116335564-1",'auto');ga('send','pageview');</script></body></html>

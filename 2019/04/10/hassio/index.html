@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> hassio 折腾 未完工 · 大马的个人网站</title><meta name="description" content="hassio 折腾 未完工 - 大马"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://bigma.cc/atom.xml" title="大马的个人网站"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avater.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">日志</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="/1000/01/01/实验室/" target="_self" class="nav-list-link">实验室</a></li><li class="nav-list-item"><a href="http://weibo.com/80yang" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/windy0220" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">hassio 折腾 未完工</h1><div class="post-info">2019年4月10日</div><div class="post-content"><h1 id="树莓派安装-hass-io-折腾记"><a href="#树莓派安装-hass-io-折腾记" class="headerlink" title="树莓派安装 hass.io 折腾记"></a>树莓派安装 hass.io 折腾记</h1><h4 id="下载烧录"><a href="#下载烧录" class="headerlink" title="下载烧录"></a>下载烧录</h4><p>这是官方的下载地址</p>
+<p><a href="https://www.home-assistant.io/hassio/installation/" target="_blank" rel="noopener">https://www.home-assistant.io/hassio/installation/</a></p>
+<p>一开始下的1.12版怎么也进不去系统，后来换了1.1版才可以。</p>
+<p><a href="https://github.com/home-assistant/hassos/releases/download/1.1/hassos_rpi3-64-1.1.img.gz" target="_blank" rel="noopener">https://github.com/home-assistant/hassos/releases/download/1.1/hassos_rpi3-64-1.1.img.gz</a></p>
+<p>然后下载一个烧录工具etcher</p>
+<p><a href="https://www.balena.io/etcher/" target="_blank" rel="noopener">https://www.balena.io/etcher/</a></p>
+<p>把镜像烧到sd卡中</p>
+<p>需要16G 以上的 TF 卡 官方推荐32G的卡 </p>
+<h4 id="配置无限连接"><a href="#配置无限连接" class="headerlink" title="配置无限连接"></a>配置无限连接</h4><p>配置 wifi 需要单独准备一个U盘来存放wifi连接信息</p>
+<p><a href="https://github.com/home-assistant/hassos/blob/dev/Documentation/network.md" target="_blank" rel="noopener">https://github.com/home-assistant/hassos/blob/dev/Documentation/network.md</a></p>
+<p>uuid 的生成地址 <a href="https://www.uuidgenerator.net/" target="_blank" rel="noopener">https://www.uuidgenerator.net/</a></p>
+<p>在<code>network</code>文件夹内创建文件<code>my-network</code> </p>
+<p>修改其中的 ssid为你的wifi psk 为你的wifi密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[connection]</span><br><span class="line">id=hassos-network</span><br><span class="line">uuid=72111c67-4a5d-4d5c-925e-f8ee26efb3c3</span><br><span class="line">type=802-11-wireless</span><br><span class="line"></span><br><span class="line">[802-11-wireless]</span><br><span class="line">mode=infrastructure</span><br><span class="line">ssid=MY_SSID</span><br><span class="line"></span><br><span class="line">[802-11-wireless-security]</span><br><span class="line">auth-alg=open</span><br><span class="line">key-mgmt=wpa-psk</span><br><span class="line">psk=MY_WLAN_SECRET_KEY</span><br><span class="line"></span><br><span class="line">[ipv4]</span><br><span class="line">method=auto</span><br><span class="line"></span><br><span class="line">[ipv6]</span><br><span class="line">addr-gen-mode=stable-privacy</span><br><span class="line">method=auto</span><br></pre></td></tr></table></figure>
+<h4 id="安装-HASSIO"><a href="#安装-HASSIO" class="headerlink" title="安装 HASSIO"></a>安装 HASSIO</h4><p>一定要给安装hassio的树莓派全程翻墙</p>
+<p>启动后过一会访问hassio.loacl:8123会看到一个蓝色的房子让你等20分钟，如果你翻墙网速够好也就20分钟的事，要不然可能永远也不会好。</p>
+<h4 id="添加插件源"><a href="#添加插件源" class="headerlink" title="添加插件源"></a>添加插件源</h4><p>Hass.io -&gt; ADD-ON STORE</p>
+<p><strong><a href="https://github.com/hassio-addons/repository" target="_blank" rel="noopener">https://github.com/hassio-addons/repository</a></strong> </p>
+<p>主要的插件</p>
+<h5 id="SSH-server"><a href="#SSH-server" class="headerlink" title="SSH server"></a>SSH server</h5><p>可以让你ssh连接hass.io</p>
+<p>配置也比较简单</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"authorized_keys"</span>: [],</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"youPassWord"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Configurator"><a href="#Configurator" class="headerlink" title="Configurator"></a>Configurator</h5><p>可以在页面上编辑hass.io的配置文件，配置文件是hass.io的核心内容，通过简单的配置在不用安装插件的情况下就可以接入大量智能设备</p>
+<p>配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"username"</span>: <span class="string">"yourUserName"</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"yourPassWord"</span>,</span><br><span class="line">  <span class="attr">"ssl"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"certfile"</span>: <span class="string">"fullchain.pem"</span>,</span><br><span class="line">  <span class="attr">"keyfile"</span>: <span class="string">"privkey.pem"</span>,</span><br><span class="line">  <span class="attr">"allowed_networks"</span>: [</span><br><span class="line">    <span class="string">"192.168.0.0/16"</span>,</span><br><span class="line">    <span class="string">"172.30.0.0/16"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"banned_ips"</span>: [</span><br><span class="line">    <span class="string">"8.8.8.8"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"banlimit"</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"ignore_pattern"</span>: [</span><br><span class="line">    <span class="string">"__pycache__"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"dirsfirst"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"enforce_basepath"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"notify_service"</span>: <span class="string">"persistent_notification.create"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你也可以使用winscp连接ssh直接编辑文件，但使用 Configurator 会帮你纠错</p>
+<h4 id="custom-ui"><a href="#custom-ui" class="headerlink" title="custom-ui"></a>custom-ui</h4><p><a href="https://bbs.hassbian.com/thread-3975-1-4.html" target="_blank" rel="noopener">https://bbs.hassbian.com/thread-3975-1-4.html</a></p>
+<h4 id="开启MQTT"><a href="#开启MQTT" class="headerlink" title="开启MQTT"></a>开启MQTT</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mqtt:</span></span><br><span class="line"><span class="attr">  password:</span> <span class="string">mqttPassWord</span></span><br></pre></td></tr></table></figure>
+<p>默认值</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Port</td>
+<td>1883</td>
+</tr>
+<tr>
+<td>User</td>
+<td>homeassistant</td>
+</tr>
+<tr>
+<td>Websocket port</td>
+<td>8080</td>
+</tr>
+</tbody>
+</table>
+<h4 id="接入homekit"><a href="#接入homekit" class="headerlink" title="接入homekit"></a>接入homekit</h4><p>在 configuration 文件里添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">homekit:</span><br></pre></td></tr></table></figure>
+<p>如果之前激活过，需要删掉config文件夹下的 .homekit.state 文件 然后重启</p>
+<h4 id="斐讯设备"><a href="#斐讯设备" class="headerlink" title="斐讯设备"></a>斐讯设备</h4><h4 id="小米设备"><a href="#小米设备" class="headerlink" title="小米设备"></a>小米设备</h4><h4 id="博联设备"><a href="#博联设备" class="headerlink" title="博联设备"></a>博联设备</h4><h4 id="ESP8266"><a href="#ESP8266" class="headerlink" title="ESP8266"></a>ESP8266</h4><p>ESP_Easy_0</p>
+<p>192.168.4.1</p>
+<p>烧录固件时把io0接到GND</p>
+<p>不接RXD TXD 可运行</p>
+<p><strong>MQTT的配置</strong></p>
+<p>Devices -&gt; Send to Controller</p>
+<p>Tools -&gt; Advanced -&gt; 勾上 MQTT Retain Msg</p>
+<p>Controller -&gt; Edit -&gt; 填入MQTT 的 IP ，端口一般为1883, Controller User为homeassistant(hassio默认) 密码是在配置文件中配置的，Controller Subscribe 默认，Controller Publish 改第一个变量 如 /Lux/%tskname%/%valname%</p>
+<p>Enabled 勾上</p>
+<p>然后到 hassio 的 configuration 文件中配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">sensor</span> <span class="number">3</span><span class="string">:</span></span><br><span class="line"><span class="attr">  - platform:</span> <span class="string">mqtt</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">"Lux"</span> <span class="comment"># 随便起，但中文不行</span></span><br><span class="line"><span class="attr">    state_topic:</span> <span class="string">"/Lux/2561/Lux"</span> <span class="comment"># /你在esp8266 controller 中配置的/devices中的name/devices 中的Values 单位</span></span><br><span class="line"><span class="attr">    qos:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">    retain:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    unit_of_measurement:</span> <span class="string">"lux"</span> <span class="comment"># 单位</span></span><br></pre></td></tr></table></figure>
+<h4 id="Node-RED"><a href="#Node-RED" class="headerlink" title="Node RED"></a>Node RED</h4><p>添加插件源 <a href="https://github.com/notoriousbdg/hassio-addons" target="_blank" rel="noopener">https://github.com/notoriousbdg/hassio-addons</a> </p>
+<hr>
+<h4 id="资料参考"><a href="#资料参考" class="headerlink" title="资料参考"></a>资料参考</h4><p>hass.io 官网 <a href="https://www.home-assistant.io" target="_blank" rel="noopener">https://www.home-assistant.io</a></p>
+<p>hass.io 组件一览表 <a href="https://www.home-assistant.io/components/" target="_blank" rel="noopener">https://www.home-assistant.io/components/</a></p>
+<p>HassBan论坛 <a href="https://bbs.hassbian.com/forum.php" target="_blank" rel="noopener">https://bbs.hassbian.com/forum.php</a></p>
+<p>ESP EASY 官网 <a href="https://www.letscontrolit.com/" target="_blank" rel="noopener">https://www.letscontrolit.com/</a>    </p>
+<p>ESP EASY wiki <a href="https://www.letscontrolit.com/wiki/index.php/Main_Page" target="_blank" rel="noopener">https://www.letscontrolit.com/wiki/index.php/Main_Page</a></p>
+<p>安可信官网 <a href="http://en.ai-thinker.com/" target="_blank" rel="noopener">http://en.ai-thinker.com/</a></p>
+<p>ESP8266文档 <a href="http://en.ai-thinker.com/esp8266/docs" target="_blank" rel="noopener">http://en.ai-thinker.com/esp8266/docs</a></p>
+<h4 id="软件下载"><a href="#软件下载" class="headerlink" title="软件下载"></a>软件下载</h4><p>安信可串口调试助手 <a href="http://en.ai-thinker.com/_media/tools/aithinker_serial_tool_v1.2.3.7z" target="_blank" rel="noopener">http://en.ai-thinker.com/_media/tools/aithinker_serial_tool_v1.2.3.7z</a></p>
+<h4 id="物料列表"><a href="#物料列表" class="headerlink" title="物料列表"></a>物料列表</h4><p>树莓派3B+</p>
+<p>32G TF卡</p>
+<p>ESP8266 芯片 ESP01</p>
+<p>ESP8266 芯片 ESP V3</p>
+<p>面包板</p>
+<p>杜邦线</p>
+<p>TTL</p>
+<p>光敏传感器</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/07/18/jsHeight/" class="prev">PREV</a><a href="/2019/03/02/page/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ma-chen-cn';
+var disqus_identifier = '2019/04/10/hassio/';
+var disqus_title = 'hassio 折腾 未完工';
+var disqus_url = 'http://bigma.cc/2019/04/10/hassio/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ma-chen-cn.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2023 <a href="http://bigma.cc">大马</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>. <a href="https://beian.miit.gov.cn/" target="_blank">冀ICP备13002956号-1</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-116335564-1",'auto');ga('send','pageview');</script></body></html>

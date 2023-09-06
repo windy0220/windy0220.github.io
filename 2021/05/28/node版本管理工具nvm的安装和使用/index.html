@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> windows node版本管理工具nvm的安装和使用 · 大马的个人网站</title><meta name="description" content="windows node版本管理工具nvm的安装和使用 - 大马"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://bigma.cc/atom.xml" title="大马的个人网站"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avater.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">日志</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="/1000/01/01/实验室/" target="_self" class="nav-list-link">实验室</a></li><li class="nav-list-item"><a href="http://weibo.com/80yang" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/windy0220" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">windows node版本管理工具nvm的安装和使用</h1><div class="post-info">2021年5月28日</div><div class="post-content"><p>在实际的前端开发工作中，我们经常要维护一些老项目使用的是较旧版本的node和npm，新的项目又要使用比较新的node和npm，这时候就要祭出node版本工具了，上次说过 Linux上的node版本工具n，这次就来看看windows上的node版本管理工具nvm如何安装和使用。<br><a id="more"></a></p>
+<h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><p>官方给出了绿色版和安装版，这里推荐安装版，更方便快捷，省区了配置环境变量的麻烦。</p>
+<p>下载地址 <a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows/releases</a></p>
+<p>下载 nvm-setup.zip 即可。</p>
+<p>下载完成解压安装即可。</p>
+<p>这里要注意的是有两个路径提示，第一个是nvm的安装路径，第二个是nodeJs的安装路径。如果你的nodeJs安装在默认路径下。一路下一步即可安装成功。</p>
+<p><img src="/images/image-20210527234010427.png" alt="image-20210527234010427"></p>
+<p><img src="/images/image-20210527234032258.png" alt="image-20210527234032258"></p>
+<h4 id="使用nvm安装nodeJs"><a href="#使用nvm安装nodeJs" class="headerlink" title="使用nvm安装nodeJs"></a>使用nvm安装nodeJs</h4><p>安装 14.17.0 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm install 14.17.0</span><br></pre></td></tr></table></figure>
+<p>注意这里的版本号，需要真是存在才可以。可以去 <a href="https://nodejs.org/zh-cn/download/releases/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/download/releases/</a> 查询需要的版本</p>
+<p>如果遇到下载失败，也没有关系，我们可以到阿里的镜像网站下载对应的安装包，解压到nvm的路径里</p>
+<p>例如我们需要 14.17.0 的版本 <a href="https://npm.taobao.org/mirrors/node/v14.17.0/" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/node/v14.17.0/</a></p>
+<p>找到 <code>node-v14.17.0-win-x64.7z</code> 下载解压至 <code>C:\Users\【这里一般是你的用户名】\AppData\Roaming\nvm\v14.17.0</code> 即可。</p>
+<p>如果遇到安装后，node可以使用 npm 用不了也可以使用此方法。</p>
+<h4 id="切换node版本"><a href="#切换node版本" class="headerlink" title="切换node版本"></a>切换node版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm use 14.17.0</span><br></pre></td></tr></table></figure>
+<p>即可切换。</p>
+<p>如果切换后使用 <code>node -v</code> 命令发现版本没有切换。可以把原来安装的nodeJs目录改掉</p>
+<p>如我原来的nodeJs安装目录是 <code>C:\Program Files\nodejs</code> 改为 <code>C:\Program Files\nodejsx</code> 即可成功</p>
+<h4 id="显示安装的版本"><a href="#显示安装的版本" class="headerlink" title="显示安装的版本"></a>显示安装的版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nvm list</span><br><span class="line">* 14.17.0 (Currently using 64-bit executable)</span><br><span class="line">  8.17.0</span><br></pre></td></tr></table></figure>
+<p>带* 号的则为当前版本</p>
+<h4 id="链接汇总"><a href="#链接汇总" class="headerlink" title="链接汇总"></a>链接汇总</h4><p>nvm 下载地址 <a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows/releases</a></p>
+<p>nodeJs官方版本库 <a href="https://nodejs.org/zh-cn/download/releases/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/download/releases/</a></p>
+<p>阿里镜像源 <a href="https://npm.taobao.org/mirrors/node/" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/node/</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2021/06/07/阿里云OSS图片优化参数/" class="prev">PREV</a><a href="/2020/06/07/centOsInstallNodeJs/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ma-chen-cn';
+var disqus_identifier = '2021/05/28/node版本管理工具nvm的安装和使用/';
+var disqus_title = 'windows node版本管理工具nvm的安装和使用';
+var disqus_url = 'http://bigma.cc/2021/05/28/node版本管理工具nvm的安装和使用/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ma-chen-cn.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2023 <a href="http://bigma.cc">大马</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>. <a href="https://beian.miit.gov.cn/" target="_blank">冀ICP备13002956号-1</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-116335564-1",'auto');ga('send','pageview');</script></body></html>

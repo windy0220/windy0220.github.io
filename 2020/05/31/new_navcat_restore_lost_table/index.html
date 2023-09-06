@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> navicat 恢复数据后部分表丢失 · 大马的个人网站</title><meta name="description" content="navicat 恢复数据后部分表丢失 - 大马"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://bigma.cc/atom.xml" title="大马的个人网站"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/avater.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">日志</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">归档</a></li><li class="nav-list-item"><a href="/1000/01/01/实验室/" target="_self" class="nav-list-link">实验室</a></li><li class="nav-list-item"><a href="http://weibo.com/80yang" target="_blank" class="nav-list-link">微博</a></li><li class="nav-list-item"><a href="https://github.com/windy0220" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">navicat 恢复数据后部分表丢失</h1><div class="post-info">2020年5月31日</div><div class="post-content"><h4 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h4><p>使用 navicat 恢复备份后发现部分表丢失<br>查看错误日志发现 创建表失败<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Err] 1067 - Invalid default value for &apos;*******&apos;</span><br><span class="line">[Err] Failed to create Table: *******</span><br></pre></td></tr></table></figure></p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>搜索之后发现是因为升级到 mysql 5.7 之后默认值不兼容的问题。<br>解决办法就是修改 sql_mode</p>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>windows 环境下进入到 mysql 的 bin 目录下<br>shift加鼠标右键 选择在此处打开PowerShell 窗口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\mysql -hlocalhost -P3306 -uroot -p123123</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意这里在PowerShell下要使用 .\mysql 不是直接使用 mysql</p>
+</blockquote>
+<p>输入 <code>show variables like &#39;sql_mode&#39;;</code> 查看当前的 sql_mode 设置</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sql_mode</td>
+<td>ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果结果中包含 <code>NO_ZERO_IN_DATE, NO_ZERO_DATE</code><br>则需要修改</p>
+<p>在命令行中执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set session sql_mode=‘ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION’;</span><br></pre></td></tr></table></figure></p>
+<p>这只是临时会话有效。需要修改配置文件。</p>
+<p>尝试使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set sql_mode=‘ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION’;</span><br></pre></td></tr></table></figure></p>
+<p>也没有效果。</p>
+<p>这里通过修改 配置文件 实现</p>
+<p>· windows my.ini</p>
+<p>· linux my.cnf</p>
+<p>在配置文件[mysqld]中加上</p>
+<blockquote>
+<p>注意要加在[mysqld]中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_mode=&apos;ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&apos;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>重启服务器，再次导入navicat备份，全部成功</p>
+<h4 id="附-sql-mode常用值"><a href="#附-sql-mode常用值" class="headerlink" title="附 sql_mode常用值"></a>附 sql_mode常用值</h4><table>
+<thead>
+<tr>
+<th>name</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ONLY_FULL_GROUP_BY</td>
+<td>对于GROUP BY聚合操作，如果在SELECT中的列，没有在GROUP BY中出现，那么这个SQL是不合法的，因为列不在GROUP BY从句中</td>
+</tr>
+<tr>
+<td>NO_AUTO_VALUE_ON_ZERO</td>
+<td>该值影响自增长列的插入。默认设置下，插入0或NULL代表生成下一个自增长值。如果用户希望插入的值为0，而该列又是自增长的，那么这个选项就有用了。</td>
+</tr>
+<tr>
+<td>STRICT_TRANS_TABLES</td>
+<td>在该模式下，如果一个值不能插入到一个事务中，则中断当前的操作，对非事务表不做限制</td>
+</tr>
+<tr>
+<td>NO_ZERO_IN_DATE</td>
+<td>在严格模式下，不允许日期和月份为零</td>
+</tr>
+<tr>
+<td>NO_ZERO_DATE</td>
+<td>设置该值，mysql数据库不允许插入零日期，插入零日期会抛出错误而不是警告</td>
+</tr>
+<tr>
+<td>ERROR_FOR_DIVISION_BY_ZERO</td>
+<td>在insert或update过程中，如果数据被零除，则产生错误而非警告。如果未给出该模式，那么数据被零除时Mysql返回NULL</td>
+</tr>
+<tr>
+<td>NO_AUTO_CREATE_USER</td>
+<td>禁止GRANT创建密码为空的用户</td>
+</tr>
+<tr>
+<td>NO_ENGINE_SUBSTITUTION</td>
+<td>如果需要的存储引擎被禁用或未编译，那么抛出错误。不设置此值时，用默认的存储引擎替代，并抛出一个异常</td>
+</tr>
+<tr>
+<td>PIPES_AS_CONCAT</td>
+<td>将”&#124;&#124;”视为字符串的连接操作符而非或运算符，这和Oracle数据库是一样是，也和字符串的拼接函数Concat想类似</td>
+</tr>
+<tr>
+<td>ANSI_QUOTES</td>
+<td>启用ANSI_QUOTES后，不能用双引号来引用字符串，因为它被解释为识别符</td>
+</tr>
+</tbody>
+</table>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/06/07/centOsInstallNodeJs/" class="prev">PREV</a><a href="/2020/05/04/wordpress-api/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ma-chen-cn';
+var disqus_identifier = '2020/05/31/new_navcat_restore_lost_table/';
+var disqus_title = 'navicat 恢复数据后部分表丢失';
+var disqus_url = 'http://bigma.cc/2020/05/31/new_navcat_restore_lost_table/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ma-chen-cn.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2023 <a href="http://bigma.cc">大马</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>. <a href="https://beian.miit.gov.cn/" target="_blank">冀ICP备13002956号-1</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-116335564-1",'auto');ga('send','pageview');</script></body></html>
